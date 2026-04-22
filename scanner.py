@@ -3,10 +3,9 @@ import pandas as pd
 import os
 from datetime import datetime
 
-SCORE_THRESHOLD = 60
-BUY_VOL_RATIO   = 1.5
-CHEAP_PER       = 15.0
-PRICEY_PER      = 25.0
+BUY_VOL_RATIO = 1.5
+CHEAP_PER     = 15.0
+PRICEY_PER    = 25.0
 
 PEERS = {
     "7203.T": ["7267.T", "7201.T", "7269.T"],
@@ -284,8 +283,8 @@ def build_detail_html(d):
         if diff is None: return "#4a7090"
         return "#00ff9d" if abs(diff) <= 2 else ("#ffd166" if abs(diff) <= 5 else "#ff4d6d")
 
-    diff_pull  = round((d["close"]/pullback -1)*100, 1) if pullback  and pullback  > 0 else None
-    diff_break = round((d["close"]/breakout -1)*100, 1) if breakout  and breakout  > 0 else None
+    diff_pull  = round((d["close"]/pullback -1)*100, 1) if pullback and pullback > 0 else None
+    diff_break = round((d["close"]/breakout -1)*100, 1) if breakout and breakout > 0 else None
     entry_pull_str  = f"¥{pullback:,.1f}（{diff_pull:+.1f}%）"  if diff_pull  is not None else "N/A"
     entry_break_str = f"¥{breakout:,.1f}（{diff_break:+.1f}%）" if diff_break is not None else "N/A"
 
@@ -539,20 +538,27 @@ def build_detail_html(d):
 
 def build_index_html(results, all_count):
     now = datetime.now().strftime("%Y年%m月%d日 %H:%M")
-    score_color = lambda s: "#00ff9d" if s >= 70 else ("#ffd166" if s >= 40 else "#ff4d6d")
+    def sc(s): return "#00ff9d" if s >= 70 else ("#ffd166" if s >= 40 else "#ff4d6d")
+    def verdict_label(s): return "買い優勢" if s >= 70 else ("様子見" if s >= 40 else "見送り")
     rows = ""
-    for r in results:
+    for i, r in enumerate(results, 1):
         trend = "<span style='color:#00ff9d'>↑上昇</span>" if r["trend_up"] else "<span style='color:#ff4d6d'>↓下降</span>"
         per_s = f"{r['per']:.1f}倍" if r["per"] else "N/A"
         vr_s  = f"{r['vol_ratio']:.2f}x" if r["vol_ratio"] else "N/A"
-        sc    = r["score"]
+        s     = r["score"]
         fname = r["symbol"].replace(".", "_") + ".html"
+        medal = "🥇" if i == 1 else ("🥈" if i == 2 else ("🥉" if i == 3 else f"{i}"))
         rows += f"""<tr onclick="location.href='{fname}'" style="cursor:pointer">
-          <td>{r['symbol']}</td><td>{r['name']}</td><td>¥{r['close']:,.1f}</td>
-          <td style='color:{score_color(sc)};font-weight:700'>{sc}/100</td>
-          <td>{trend}</td><td>{vr_s}</td><td>{per_s}</td>
+          <td style="text-align:center;font-size:16px">{medal}</td>
+          <td>{r['symbol']}</td>
+          <td>{r['name']}</td>
+          <td>¥{r['close']:,.1f}</td>
+          <td style='color:{sc(s)};font-weight:700'>{s}/100</td>
+          <td style='color:{sc(s)}'>{verdict_label(s)}</td>
+          <td>{trend}</td>
+          <td>{vr_s}</td>
+          <td>{per_s}</td>
         </tr>"""
-    no_result = "" if results else "<tr><td colspan='7' style='text-align:center;color:#4a7090;padding:40px'>本日の注目銘柄はありません</td></tr>"
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -571,12 +577,12 @@ def build_index_html(results, all_count):
 </style>
 </head>
 <body>
-<h1>📈 株価スキャナー結果</h1>
-<div class="meta">{now} ／ スキャン {all_count}銘柄 → 注目 {len(results)}銘柄（スコア{SCORE_THRESHOLD}以上）</div>
+<h1>📈 株価スキャナー ランキング</h1>
+<div class="meta">{now} ／ {all_count}銘柄 スコア順ランキング</div>
 <div class="hint">※ 行をクリックすると詳細ダッシュボードが開きます</div>
 <table>
-  <thead><tr><th>コード</th><th>銘柄名</th><th>株価</th><th>スコア</th><th>トレンド</th><th>出来高比</th><th>PER</th></tr></thead>
-  <tbody>{rows}{no_result}</tbody>
+  <thead><tr><th>順位</th><th>コード</th><th>銘柄名</th><th>株価</th><th>スコア</th><th>判断</th><th>トレンド</th><th>出来高比</th><th>PER</th></tr></thead>
+  <tbody>{rows}</tbody>
 </table>
 </body>
 </html>"""
@@ -585,26 +591,26 @@ def main():
     with open("stocks.txt") as f:
         symbols = [line.strip() for line in f if line.strip()]
     print(f"スキャン開始: {len(symbols)}銘柄")
-    results = []
+    all_results = []
     for symbol in symbols:
         print(f"  チェック中: {symbol}")
         r = analyze(symbol)
-        if r and r["score"] >= SCORE_THRESHOLD:
-            results.append(r)
+        if r:
+            all_results.append(r)
             print(f"  ✅ {symbol} スコア{r['score']}")
         else:
-            print(f"  ⬜ {symbol} 対象外")
-    results.sort(key=lambda x: x["score"], reverse=True)
+            print(f"  ⬜ {symbol} 取得失敗")
+    all_results.sort(key=lambda x: x["score"], reverse=True)
     os.makedirs("docs", exist_ok=True)
-    for r in results:
+    for r in all_results:
         print(f"  詳細ページ生成: {r['symbol']}")
         html  = build_detail_html(r)
         fname = r["symbol"].replace(".", "_") + ".html"
         with open(f"docs/{fname}", "w", encoding="utf-8") as f:
             f.write(html)
     with open("docs/index.html", "w", encoding="utf-8") as f:
-        f.write(build_index_html(results, len(symbols)))
-    print(f"完了: 一覧+{len(results)}件の詳細ページを生成")
+        f.write(build_index_html(all_results, len(symbols)))
+    print(f"完了: {len(all_results)}銘柄をランキング表示")
 
 if __name__ == "__main__":
     main()
