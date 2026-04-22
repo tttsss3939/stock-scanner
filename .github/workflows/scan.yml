@@ -25,10 +25,10 @@ jobs:
       - name: スキャン実行
         run: python scanner.py
 
-      - name: 結果をGitHubにプッシュ
+        - name: 結果をGitHubにプッシュ
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add docs/index.html
+          git add docs/
           git commit -m "スキャン結果更新" || echo "変更なし"
           git push
