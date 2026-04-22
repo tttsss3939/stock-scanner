@@ -1,30 +1,23 @@
 name: 株価スキャナー
-
 on:
   schedule:
     - cron: '30 6 * * 1-5'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Python設定
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
       - name: ライブラリインストール
         run: pip install yfinance pandas
-
       - name: スキャン実行
         run: python scanner.py
-
       - name: 結果をGitHubにプッシュ
         run: |
           git config user.name "github-actions"
