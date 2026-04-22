@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>9433.T — 投資判断</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0e1a;color:#c8d6e5;font-family:'Segoe UI',sans-serif;min-height:100vh;padding:12px 20px}
+  .back-btn{display:inline-block;margin-bottom:12px;padding:6px 14px;background:#0d1b2e;border:1px solid #1e3a5f;border-radius:8px;color:#00d4ff;text-decoration:none;font-size:13px}
+  .back-btn:hover{background:#1e3a5f}
+  .container{max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:7px}
+  .snapshot{background:#0d1b2e;border:1px solid #1e3a5f;border-radius:10px;padding:7px 16px;font-size:12px;font-weight:600;color:#c8d6e5;text-align:center}
+  .header{background:linear-gradient(135deg,#0d1b2e,#0a1628);border:1px solid #1e3a5f;border-radius:14px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .symbol{font-size:12px;font-weight:600;letter-spacing:2px;color:#00d4ff}
+  .name{font-size:18px;font-weight:700;color:#fff;margin:2px 0 6px}
+  .price{font-size:28px;font-weight:700;color:#fff}
+  .price span{font-size:16px;color:#7a92ab;margin-right:4px}
+  .state-badge{padding:6px 16px;border-radius:999px;font-size:16px;font-weight:700;color:#ffd166;background:#2a2000;border:2px solid #ffd166;box-shadow:0 0 14px #ffd16655;white-space:nowrap}
+  .card{background:#0d1b2e;border:1px solid #1e3a5f;border-radius:12px;padding:10px 14px}
+  .card-label{font-size:10px;font-weight:600;letter-spacing:2px;color:#4a7090;text-transform:uppercase;margin-bottom:6px}
+  .verdict-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .verdict-text{font-size:24px;font-weight:700;color:#00ff9d;text-shadow:0 0 10px #00ff9d88}
+  .score-number{font-size:26px;font-weight:700;color:#00ff9d;margin-bottom:8px}
+  .score-number span{font-size:14px;color:#4a7090}
+  .gauge-bg{background:#1a2a3a;border-radius:999px;height:8px;overflow:hidden}
+  .gauge-fill{height:100%;width:70%;background:linear-gradient(90deg,#00ff9d88,#00ff9d);border-radius:999px}
+  .reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .reason-card{background:#0d1b2e;border:1px solid #1e3a5f;border-radius:12px;padding:10px 14px}
+  .reason-main{font-size:14px;font-weight:700;margin-bottom:2px}
+  .reason-sub{font-size:11px;color:#4a7090}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .metric-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid #152030;font-size:11px}
+  .metric-row:last-child{border-bottom:none}
+  .metric-label{color:#4a7090}
+  .metric-value{font-weight:600}
+  .vol-day-row{display:grid;grid-template-columns:8em 3.5em 1fr 1fr;align-items:center;padding:3px 0;border-bottom:1px solid #152030;font-size:10px;gap:4px}
+  .vol-day-row:last-child{border-bottom:none}
+  .strat-icon{font-size:18px;margin-bottom:4px}
+  .strat-title{font-size:15px;font-weight:700;color:#00d4ff;margin-bottom:5px}
+  .strat-body{font-size:11px;line-height:1.6;color:#8aa8c0}
+  .risk-item{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #152030}
+  .risk-item:last-child{border-bottom:none}
+  .risk-title{font-size:12px;font-weight:600;margin-bottom:2px}
+  .risk-desc{font-size:10px;color:#4a7090}
+  .footer{text-align:center;font-size:10px;color:#2a4060;padding-top:4px}
+</style>
+</head>
+<body>
+<a href="index.html" class="back-btn">← 一覧に戻る</a>
+<div class="container">
+  <div class="snapshot">🟢 上昇トレンド  ×  🟡 出来高普通  ×  🟢 割安</div>
+  <div class="header">
+    <div>
+      <div class="symbol">9433.T</div>
+      <div class="name">KDDI Corporation</div>
+      <div class="price"><span>¥</span>2,613.0</div>
+    </div>
+    <div><svg width="280" height="60" viewBox="0 0 280 60"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/></linearGradient></defs><polygon points="0,60 0.0,30.8 14.7,26.6 29.5,18.0 44.2,13.2 58.9,43.1 73.7,17.4 88.4,6.1 103.2,0.0 117.9,20.2 132.6,17.4 147.4,18.2 162.1,60.0 176.8,47.4 191.6,51.7 206.3,42.8 221.1,45.1 235.8,57.2 250.5,45.3 265.3,43.0 280.0,49.8 280,60" fill="url(#g)"/><polyline points="0.0,30.8 14.7,26.6 29.5,18.0 44.2,13.2 58.9,43.1 73.7,17.4 88.4,6.1 103.2,0.0 117.9,20.2 132.6,17.4 147.4,18.2 162.1,60.0 176.8,47.4 191.6,51.7 206.3,42.8 221.1,45.1 235.8,57.2 250.5,45.3 265.3,43.0 280.0,49.8" fill="none" stroke="#00d4ff" stroke-width="2"/></svg></div>
+    <div class="state-badge">中立</div>
+  </div>
+  <div class="verdict-row">
+    <div class="card"><div class="card-label">投資判断</div><div class="verdict-text">買い優勢</div></div>
+    <div class="card"><div class="card-label">総合スコア</div><div class="score-number">70<span> / 100</span></div><div class="gauge-bg"><div class="gauge-fill"></div></div></div>
+  </div>
+  <div class="reasons">
+    <div class="reason-card"><div>📊</div><div class="reason-main" style="color:#00ff9d">↑ 上昇トレンド</div><div class="reason-sub">MA25 2,659.9 / MA75 2,640.1</div></div>
+    <div class="reason-card"><div>🌐</div><div class="reason-main" style="color:#ff4d6d">市場比 -1.18%</div><div class="reason-sub">日経 +0.40% / 銘柄 -0.78%</div></div>
+    <div class="reason-card"><div>💰</div><div class="reason-main" style="color:#00ff9d">PER 14.5倍</div><div class="reason-sub">割安</div></div>
+  </div>
+  <div class="grid-4">
+    <div class="card"><div class="card-label">トレンド詳細</div><div class="metric-row"><span class="metric-label">MA5</span><span class="metric-value" style="color:#c8d6e5">2,618.1</span></div><div class="metric-row"><span class="metric-label">MA25</span><span class="metric-value" style="color:#c8d6e5">2,659.9</span></div><div class="metric-row"><span class="metric-label">MA75</span><span class="metric-value" style="color:#c8d6e5">2,640.1</span></div><div class="metric-row"><span class="metric-label">MA差(25-75)</span><span class="metric-value" style="color:#00ff9d">+19.8</span></div></div>
+    <div class="card"><div class="card-label">市場比較</div><div class="metric-row"><span class="metric-label">銘柄前日比</span><span class="metric-value" style="color:#ff4d6d">-0.78%</span></div><div class="metric-row"><span class="metric-label">日経前日比</span><span class="metric-value" style="color:#00ff9d">+0.40%</span></div><div class="metric-row"><span class="metric-label">相対強度</span><span class="metric-value" style="color:#ff4d6d">-1.18%</span></div></div>
+    <div class="card"><div class="card-label">価格レンジ</div><div class="metric-row"><span class="metric-label">年初来高値</span><span class="metric-value" style="color:#ff4d6d">¥2,785.5</span></div><div class="metric-row"><span class="metric-label">年初来安値</span><span class="metric-value" style="color:#ffd166">¥2,475.1</span></div><div class="metric-row"><span class="metric-label">上場来高値</span><span class="metric-value" style="color:#ff4d6d">¥2,785.5</span></div><div class="metric-row"><span class="metric-label">上場来安値</span><span class="metric-value" style="color:#00ff9d">¥92.9</span></div></div>
+    <div class="card"><div class="card-label">直近終値</div><div class="metric-row"><span class="metric-label">3日前</span><span class="metric-value">¥2,590.5</span></div><div class="metric-row"><span class="metric-label">2日前</span><span class="metric-value">¥2,626.5<span style="color:#00ff9d;font-size:12px;margin-left:8px">+36.0（+1.39%）</span></span></div><div class="metric-row"><span class="metric-label">前日</span><span class="metric-value">¥2,633.5<span style="color:#00ff9d;font-size:12px;margin-left:8px">+7.0（+0.27%）</span></span></div><div class="metric-row"><span class="metric-label">当日</span><span class="metric-value">¥2,613.0<span style="color:#ff4d6d;font-size:12px;margin-left:8px">-20.5（-0.78%）</span></span></div></div>
+  </div>
+  <div class="grid-3">
+    <div class="card"><div class="card-label">Valuation</div><div class="metric-row"><span class="metric-label">PER</span><span class="metric-value" style="color:#00ff9d">14.5倍</span></div><div class="metric-row"><span class="metric-label">PBR</span><span class="metric-value" style="color:#ff4d6d">2.0倍</span></div><div class="metric-row"><span class="metric-label">ROE</span><span class="metric-value" style="color:#ffd166">13.7%</span></div><div class="metric-row"><span class="metric-label">ROA</span><span class="metric-value" style="color:#ffd166">3.8%</span></div><div class="metric-row"><span class="metric-label">配当利回り</span><span class="metric-value" style="color:#00ff9d">3.0%</span></div></div>
+    <div class="card"><div class="card-label">業界比較</div><div class="metric-row"><span class="metric-label">PER（自社）</span><span class="metric-value" style="color:#00ff9d">14.5倍</span></div><div class="metric-row"><span class="metric-label">PER（業界平均）</span><span class="metric-value" style="color:#c8d6e5">15.8倍</span></div><div class="metric-row"><span class="metric-label">ROE（自社）</span><span class="metric-value" style="color:#ff4d6d">13.7%</span></div><div class="metric-row"><span class="metric-label">ROE（業界平均）</span><span class="metric-value" style="color:#c8d6e5">14.1%</span></div></div>
+    <div class="card"><div class="card-label">出来高分析（直近3日）</div>
+      <div style="font-size:13px;font-weight:700;color:#ffd166;margin-bottom:5px">◆ 通常</div>
+      <div class="vol-day-row"><span class="metric-label">3日前→2日前</span><span style="color:#00ff9d;font-weight:700">▲ 株価</span><span>6,559,900株</span><span style="color:#ff4d6d;font-weight:600">▼ 1,659,000</span></div><div class="vol-day-row"><span class="metric-label">2日前→前日</span><span style="color:#00ff9d;font-weight:700">▲ 株価</span><span>5,005,500株</span><span style="color:#ff4d6d;font-weight:600">▼ 1,554,400</span></div><div class="vol-day-row"><span class="metric-label">前日→当日</span><span style="color:#ff4d6d;font-weight:700">▼ 株価</span><span>5,808,000株</span><span style="color:#00ff9d;font-weight:600">▲ 802,500</span></div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="card"><div class="strat-icon">⏳</div><div class="strat-title">様子見</div><div class="strat-body">出来高の回復を待つ。<br>トレンド継続を確認してからエントリー検討。</div></div>
+    <div class="card"><div class="card-label">リスク</div><div class="risk-item"><span class="risk-icon" style="color:#ff4d6d">⚠</span><div><div class="risk-title" style="color:#ff4d6d">出来高不足</div><div class="risk-desc">買い圧力が弱く反発力に欠ける</div></div></div></div>
+  </div>
+  <div class="footer">generated automatically</div>
+</div>
+</body>
+</html>
