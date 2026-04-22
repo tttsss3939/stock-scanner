@@ -5,25 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>株価スキャナー結果</title>
 <style>
-  body { background:#0a0e1a; color:#c8d6e5; font-family:'Segoe UI',sans-serif; padding:20px; }
-  h1 { color:#00d4ff; font-size:22px; margin-bottom:4px; }
-  .meta { color:#4a7090; font-size:13px; margin-bottom:20px; }
-  table { width:100%; border-collapse:collapse; }
-  th { background:#0d1b2e; color:#4a7090; font-size:11px; letter-spacing:1px; padding:10px; text-align:left; border-bottom:2px solid #1e3a5f; }
-  td { padding:10px 10px; border-bottom:1px solid #152030; font-size:13px; }
-  tr:hover td { background:#0d1b2e; }
+  body{background:#0a0e1a;color:#c8d6e5;font-family:'Segoe UI',sans-serif;padding:20px}
+  h1{color:#00d4ff;font-size:22px;margin-bottom:4px}
+  .meta{color:#4a7090;font-size:13px;margin-bottom:20px}
+  table{width:100%;border-collapse:collapse}
+  th{background:#0d1b2e;color:#4a7090;font-size:11px;letter-spacing:1px;padding:10px;text-align:left;border-bottom:2px solid #1e3a5f}
+  td{padding:10px;border-bottom:1px solid #152030;font-size:13px}
+  tr:hover td{background:#0d1b2e}
+  .hint{color:#4a7090;font-size:11px;margin-bottom:12px}
 </style>
 </head>
 <body>
 <h1>📈 株価スキャナー結果</h1>
-<div class="meta">2026年04月22日 13:38 ／ スキャン 50銘柄 → 注目 8銘柄（スコア60以上）</div>
+<div class="meta">2026年04月22日 13:49 ／ スキャン 50銘柄 → 注目 8銘柄（スコア60以上）</div>
+<div class="hint">※ 行をクリックすると詳細ダッシュボードが開きます</div>
 <table>
-  <thead>
-    <tr><th>コード</th><th>銘柄名</th><th>株価</th><th>スコア</th><th>トレンド</th><th>出来高比</th><th>PER</th></tr>
-  </thead>
-  <tbody>
-    
-        <tr>
+  <thead><tr><th>コード</th><th>銘柄名</th><th>株価</th><th>スコア</th><th>トレンド</th><th>出来高比</th><th>PER</th></tr></thead>
+  <tbody><tr onclick="location.href='1605_T.html'" style="cursor:pointer">
           <td>1605.T</td>
           <td>Inpex Corporation</td>
           <td>¥3,807.0</td>
@@ -31,8 +29,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>0.58x</td>
           <td>11.5倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='8593_T.html'" style="cursor:pointer">
           <td>8593.T</td>
           <td>Mitsubishi HC Capital Inc.</td>
           <td>¥1,412.0</td>
@@ -40,8 +37,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>0.73x</td>
           <td>12.5倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='9432_T.html'" style="cursor:pointer">
           <td>9432.T</td>
           <td>NTT, Inc.</td>
           <td>¥151.5</td>
@@ -49,8 +45,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>0.93x</td>
           <td>12.1倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='9433_T.html'" style="cursor:pointer">
           <td>9433.T</td>
           <td>KDDI Corporation</td>
           <td>¥2,613.0</td>
@@ -58,8 +53,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>0.60x</td>
           <td>14.5倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='4689_T.html'" style="cursor:pointer">
           <td>4689.T</td>
           <td>LY Corporation</td>
           <td>¥428.4</td>
@@ -67,8 +61,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>0.83x</td>
           <td>14.8倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='8031_T.html'" style="cursor:pointer">
           <td>8031.T</td>
           <td>Mitsui & Co., Ltd.</td>
           <td>¥5,614.0</td>
@@ -76,8 +69,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>1.03x</td>
           <td>17.8倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='2914_T.html'" style="cursor:pointer">
           <td>2914.T</td>
           <td>Japan Tobacco Inc.</td>
           <td>¥5,672.0</td>
@@ -85,8 +77,7 @@
           <td><span style='color:#00ff9d'>↑上昇</span></td>
           <td>1.03x</td>
           <td>20.2倍</td>
-        </tr>
-        <tr>
+        </tr><tr onclick="location.href='9984_T.html'" style="cursor:pointer">
           <td>9984.T</td>
           <td>SoftBank Group Corp.</td>
           <td>¥5,620.0</td>
@@ -94,8 +85,7 @@
           <td><span style='color:#ff4d6d'>↓下降</span></td>
           <td>2.42x</td>
           <td>10.5倍</td>
-        </tr>
-  </tbody>
+        </tr></tbody>
 </table>
 </body>
 </html>
