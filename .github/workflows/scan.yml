@@ -1,0 +1,26 @@
+name: 株価スキャナー
+
+on:
+  schedule:
+    - cron: '30 6 * * 1-5'  # 日本時間15:30 平日のみ
+  workflow_dispatch:          # 手動実行も可能
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Python設定
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: ライブラリインストール
+        run: pip install yfinance pandas
+
+      - name: スキャン実行
+        env:
+          GMAIL_ADDRESS:  ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        run: python scanner.py
