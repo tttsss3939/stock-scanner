@@ -2,7 +2,7 @@ name: 株価スキャナー
 
 on:
   schedule:
-    - cron: '30 6 * * 1-5'  # 日本時間15:30 平日のみ
+    - cron: '30 6 * * 1-5'
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
       - name: スキャン実行
         run: python scanner.py
 
-        - name: 結果をGitHubにプッシュ
+      - name: 結果をGitHubにプッシュ
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
