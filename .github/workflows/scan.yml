@@ -3,7 +3,10 @@ name: 株価スキャナー
 on:
   schedule:
     - cron: '30 6 * * 1-5'  # 日本時間15:30 平日のみ
-  workflow_dispatch:          # 手動実行も可能
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   scan:
@@ -20,7 +23,12 @@ jobs:
         run: pip install yfinance pandas
 
       - name: スキャン実行
-        env:
-          GMAIL_ADDRESS:  ${{ secrets.GMAIL_ADDRESS }}
-          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
         run: python scanner.py
+
+      - name: 結果をGitHubにプッシュ
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/index.html
+          git commit -m "スキャン結果更新" || echo "変更なし"
+          git push
