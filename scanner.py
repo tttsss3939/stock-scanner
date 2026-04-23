@@ -812,7 +812,7 @@ def build_mobile_detail_html(d):
   .mlabel{{color:#4a7090}}
   .mvalue{{font-weight:600}}
   .grid2{{display:grid;grid-template-columns:1fr 1fr;gap:10px}}
-  .vol-row{{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #152030;font-size:13px;gap:8px}}
+  .vol-row{{display:grid;grid-template-columns:5em 2.5em 1fr auto;align-items:center;padding:6px 0;border-bottom:1px solid #152030;font-size:12px;gap:4px;white-space:nowrap;overflow:hidden}}
   .vol-row:last-child{{border-bottom:none}}
   .risk-row{{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #152030}}
   .risk-row:last-child{{border-bottom:none}}
@@ -905,7 +905,7 @@ def build_mobile_detail_html(d):
   <div style="font-size:14px;font-weight:700;color:{vs_color};margin-bottom:6px">◆ {d['vol_strength']}</div>
   {"".join(
     f'<div class="vol-row">'
-    f'<span style="color:#4a7090;font-size:12px">{["3日前→2日前","2日前→前日","前日→当日"][i]}</span>'
+    f'<span style="color:#4a7090;font-size:11px;white-space:nowrap">{["3日前→2日前","2日前→前日","前日→当日"][i]}</span>'
     f'<span style="color:{"#00ff9d" if day["up"] else "#ff4d6d"};font-weight:700">{"▲" if day["up"] else "▼"} 株価</span>'
     f'<span>{day["volume"]:,}株</span>'
     f'<span style="color:{"#00ff9d" if day["volume"]-day["vol_prev"]>0 else "#ff4d6d"};font-weight:600">{"▲" if day["volume"]-day["vol_prev"]>0 else "▼"} {abs(day["volume"]-day["vol_prev"]):,}</span>'
