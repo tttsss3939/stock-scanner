@@ -16,12 +16,14 @@ jobs:
           python-version: '3.11'
       - name: ライブラリインストール
         run: pip install yfinance pandas
-      - name: スキャン実行
+      - name: スキャン実行（既存版）
         run: python scanner.py
+      - name: スキャン実行（テクニカル版）
+        run: python scanner_tech.py
       - name: 結果をGitHubにプッシュ
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add docs/
+          git add docs/ docs_tech/
           git commit -m "スキャン結果更新" || echo "変更なし"
           git push
