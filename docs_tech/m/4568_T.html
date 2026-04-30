@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4568.T — テクニカル判断</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0e1a;color:#c8d6e5;font-family:'Segoe UI',sans-serif;padding:12px 16px;max-width:600px;margin:0 auto}
+  a.back{display:inline-flex;align-items:center;gap:4px;margin-bottom:12px;padding:6px 14px;background:#0d1b2e;border:1px solid #1e3a5f;border-radius:999px;color:#00d4ff;text-decoration:none;font-size:13px}
+  .sec{background:#0d1b2e;border:1px solid #1e3a5f;border-radius:16px;padding:14px 16px;margin-bottom:10px}
+  .sec-label{font-size:10px;font-weight:700;letter-spacing:2px;color:#4a7090;text-transform:uppercase;margin-bottom:8px}
+  .hdr{display:flex;justify-content:space-between;align-items:flex-start}
+  .h-symbol{font-size:12px;font-weight:700;color:#00d4ff;letter-spacing:1px;margin-bottom:2px}
+  .h-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+  .h-price{font-size:28px;font-weight:700;color:#fff}
+  .h-price span{font-size:14px;color:#7a92ab;margin-right:2px}
+  .state-badge{padding:6px 14px;border-radius:999px;font-size:14px;font-weight:700;color:#ffd166;background:#2a2000;border:2px solid #ffd166;white-space:nowrap}
+  .verdict-text{font-size:24px;font-weight:700;color:#ff4d6d;margin-bottom:4px}
+  .score-row{display:flex;align-items:baseline;gap:4px;margin-bottom:6px}
+  .score-big{font-size:42px;font-weight:700;color:#ff4d6d;line-height:1}
+  .score-denom{font-size:16px;color:#4a7090}
+  .gauge-bg{background:#1a2a3a;border-radius:999px;height:6px;overflow:hidden;margin-bottom:10px}
+  .gauge-fill{height:100%;width:30%;background:linear-gradient(90deg,#ff4d6d88,#ff4d6d);border-radius:999px}
+  .score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+  .sg-item{background:#0a1628;border-radius:8px;padding:6px 8px;text-align:center}
+  .sg-label{font-size:10px;color:#4a7090;margin-bottom:2px}
+  .sg-value{font-size:13px;font-weight:700;color:#8aa8c0}
+  .reason-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #152030}
+  .reason-item:last-child{border-bottom:none}
+  .reason-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+  .reason-main{font-size:15px;font-weight:700;margin-bottom:2px}
+  .reason-sub{font-size:12px;color:#4a7090;line-height:1.4}
+  .mrow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #152030;font-size:14px}
+  .mrow:last-child{border-bottom:none}
+  .mlabel{color:#4a7090}
+  .mvalue{font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .vol-row{display:grid;grid-template-columns:5em 2.5em 1fr auto;align-items:center;padding:6px 0;border-bottom:1px solid #152030;font-size:12px;gap:4px;white-space:nowrap;overflow:hidden}
+  .vol-row:last-child{border-bottom:none}
+  .risk-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #152030}
+  .risk-row:last-child{border-bottom:none}
+  .strat-title{font-size:16px;font-weight:700;color:#00d4ff;margin:4px 0 6px}
+  .strat-body{font-size:13px;line-height:1.6;color:#8aa8c0}
+  .footer{text-align:center;font-size:10px;color:#2a4060;padding:12px 0}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">← テクニカルスキャナー 一覧に戻る</a>
+
+<div class="sec">
+  <div class="hdr">
+    <div>
+      <div class="h-symbol">4568.T</div>
+      <div class="h-name">Daiichi Sankyo Company, Limited</div>
+      <div class="h-price"><span>¥</span>2,588.5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+      <svg width="120" height="36" viewBox="0 0 120 36"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/></linearGradient></defs><polygon points="0,36 0.0,8.0 6.3,9.8 12.6,10.2 18.9,9.1 25.3,12.0 31.6,13.9 37.9,16.3 44.2,19.3 50.5,19.1 56.8,12.1 63.2,8.0 69.5,4.4 75.8,0.0 82.1,6.1 88.4,11.2 94.7,15.1 101.1,36.0 107.4,28.6 113.7,25.1 120.0,29.6 120,36" fill="url(#g)"/><polyline points="0.0,8.0 6.3,9.8 12.6,10.2 18.9,9.1 25.3,12.0 31.6,13.9 37.9,16.3 44.2,19.3 50.5,19.1 56.8,12.1 63.2,8.0 69.5,4.4 75.8,0.0 82.1,6.1 88.4,11.2 94.7,15.1 101.1,36.0 107.4,28.6 113.7,25.1 120.0,29.6" fill="none" stroke="#00d4ff" stroke-width="1.5"/></svg>
+      <div class="state-badge">中立</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">投資判断</div>
+  <div class="verdict-text">見送り</div>
+  <div class="score-row"><div class="score-big">30</div><div class="score-denom">/ 100</div></div>
+  <div class="gauge-bg"><div class="gauge-fill"></div></div>
+  <div class="score-grid">
+    <div class="sg-item"><div class="sg-label">トレンド</div><div class="sg-value">0/20</div></div>
+    <div class="sg-item"><div class="sg-label">出来高</div><div class="sg-value">4/10</div></div>
+    <div class="sg-item"><div class="sg-label">割安性</div><div class="sg-value">6/10</div></div>
+    <div class="sg-item"><div class="sg-label">RSI</div><div class="sg-value">15/15</div></div>
+    <div class="sg-item"><div class="sg-label">MACD</div><div class="sg-value">0/15</div></div>
+    <div class="sg-item"><div class="sg-label">BB</div><div class="sg-value">0/10</div></div>
+    <div class="sg-item"><div class="sg-label">市場</div><div class="sg-value">0/10</div></div>
+    <div class="sg-item"><div class="sg-label">エントリー</div><div class="sg-value">5/10</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">判断理由</div>
+  <div class="reason-item">
+    <div class="reason-icon">📊</div>
+    <div><div class="reason-main" style="color:#ff4d6d">↓ 下降トレンド</div>
+    <div class="reason-sub">MA25 2,804.2 / MA75 2,911.0</div></div>
+  </div>
+  <div class="reason-item">
+    <div class="reason-icon">🎯</div>
+    <div><div class="reason-main" style="color:#ffd166">押し目まで -3.7%</div>
+    <div class="reason-sub">押し目 ¥2,688.8（-3.7%）<br>ブレイク ¥3,016.0（-14.2%）</div></div>
+  </div>
+  <div class="reason-item">
+    <div class="reason-icon">⚙️</div>
+    <div><div class="reason-main" style="color:#ffd166">RSI 40 / DC 3日前</div>
+    <div class="reason-sub">RSI 39.7 / DC 3日前 / %B 0.10</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">テクニカル指標</div>
+  <div class="mrow"><span class="mlabel">RSI(14)</span><span class="mvalue" style="color:#00d4ff">39.7（適正圏(下)）</span></div>
+  <div class="mrow"><span class="mlabel">MACD</span><span class="mvalue" style="color:#ff4d6d">-60.84</span></div>
+  <div class="mrow"><span class="mlabel">シグナル</span><span class="mvalue" style="color:#c8d6e5">-32.76</span></div>
+  <div class="mrow"><span class="mlabel">ヒスト</span><span class="mvalue" style="color:#ff4d6d">-28.08</span></div>
+  <div class="mrow"><span class="mlabel">MACD状態</span><span class="mvalue" style="color:#ff4d6d">DC 3日前</span></div>
+  <div style="padding:8px 0 2px"><div style="display:flex;justify-content:space-between;font-size:10px;color:#4a7090;margin-bottom:2px"><span>下限(-2σ)</span><span>上限(+2σ)</span></div><div style="background:#1a2a3a;border-radius:4px;height:8px;overflow:hidden;margin-bottom:3px"><div style="width:10%;height:100%;background:#ff4d6d;border-radius:4px"></div></div><div style="font-size:12px">%B = <span style="color:#ff4d6d;font-weight:700">0.10</span></div></div>
+  <div class="mrow"><span class="mlabel">BB上限(+2σ)</span><span class="mvalue" style="color:#c8d6e5">¥3,051.4</span></div>
+  <div class="mrow"><span class="mlabel">BB中央(MA20)</span><span class="mvalue" style="color:#c8d6e5">¥2,795.4</span></div>
+  <div class="mrow"><span class="mlabel">BB下限(-2σ)</span><span class="mvalue" style="color:#c8d6e5">¥2,539.5</span></div>
+  <div class="mrow"><span class="mlabel">MA5 × MA25</span><span class="mvalue"><span style="color:#00ff9d;font-weight:600">GC 7日前</span> / <span style="color:#ff4d6d;font-weight:600">DC 3日前</span></span></div>
+  <div class="mrow"><span class="mlabel">MA25 × MA75</span><span class="mvalue"><span style="color:#4a7090">10日以内なし</span></span></div>
+</div>
+
+<div class="grid2">
+  <div class="sec">
+    <div class="sec-label">トレンド</div>
+    <div class="mrow"><span class="mlabel">MA5</span><span class="mvalue" style="color:#c8d6e5">2,626.1</span></div>
+    <div class="mrow"><span class="mlabel">MA25</span><span class="mvalue" style="color:#c8d6e5">2,804.2</span></div>
+    <div class="mrow"><span class="mlabel">MA75</span><span class="mvalue" style="color:#c8d6e5">2,911.0</span></div>
+    <div class="mrow"><span class="mlabel">MA差</span><span class="mvalue" style="color:#ff4d6d">-106.8</span></div>
+    <div class="mrow"><span class="mlabel">ATR</span><span class="mvalue" style="color:#7a92ab">115.4</span></div>
+  </div>
+  <div class="sec">
+    <div class="sec-label">市場比較</div>
+    <div class="mrow"><span class="mlabel">銘柄5日</span><span class="mvalue" style="color:#ff4d6d">-1.73%</span></div>
+    <div class="mrow"><span class="mlabel">日経5日</span><span class="mvalue" style="color:#ff4d6d">-0.10%</span></div>
+    <div class="mrow"><span class="mlabel">相対強度</span><span class="mvalue" style="color:#ff4d6d">-1.63%</span></div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="sec">
+    <div class="sec-label">Valuation</div>
+    <div class="mrow"><span class="mlabel">PER</span><span class="mvalue" style="color:#ffd166">17.3倍</span></div>
+    <div class="mrow"><span class="mlabel">PBR</span><span class="mvalue" style="color:#ff4d6d">2.8倍</span></div>
+    <div class="mrow"><span class="mlabel">ROE</span><span class="mvalue" style="color:#00ff9d">18.3%</span></div>
+    <div class="mrow"><span class="mlabel">配当</span><span class="mvalue" style="color:#ffd166">2.9%（46%）</span></div>
+  </div>
+  <div class="sec">
+    <div class="sec-label">業界比較</div>
+    <div class="mrow"><span class="mlabel">PER 自社</span><span class="mvalue" style="color:#00ff9d">17.3倍</span></div><div class="mrow"><span class="mlabel">PER 業界平均</span><span class="mvalue" style="color:#c8d6e5">23.3倍</span></div><div class="mrow"><span class="mlabel">ROE 自社</span><span class="mvalue" style="color:#ff4d6d">18.3%</span></div><div class="mrow"><span class="mlabel">ROE 業界平均</span><span class="mvalue" style="color:#c8d6e5">18.6%</span></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">出来高分析（直近3日）</div>
+  <div style="font-size:14px;font-weight:700;color:#00ff9d;margin-bottom:6px">◆ 強い流入</div>
+  <div class="vol-row"><span style="color:#4a7090;font-size:11px;white-space:nowrap">3日前→2日前</span><span style="color:#00ff9d;font-weight:700">▲ 株価</span><span>16,617,200株</span><span style="color:#ff4d6d;font-weight:600">▼ 8,621,100</span></div><div class="vol-row"><span style="color:#4a7090;font-size:11px;white-space:nowrap">2日前→前日</span><span style="color:#00ff9d;font-weight:700">▲ 株価</span><span>13,321,300株</span><span style="color:#ff4d6d;font-weight:600">▼ 3,295,900</span></div><div class="vol-row"><span style="color:#4a7090;font-size:11px;white-space:nowrap">前日→当日</span><span style="color:#ff4d6d;font-weight:700">▼ 株価</span><span>10,441,900株</span><span style="color:#ff4d6d;font-weight:600">▼ 2,879,400</span></div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">戦略</div>
+  <div style="font-size:20px;margin-bottom:4px">⏳</div>
+  <div class="strat-title">様子見</div>
+  <div class="strat-body">出来高の回復を待つ。トレンド継続を確認してからエントリー検討。</div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">リスク</div>
+  <div class="risk-row"><span style="color:#ff4d6d;font-size:16px;flex-shrink:0">⚠</span><div><div style="font-size:14px;font-weight:600;color:#ff4d6d">下降トレンド継続</div><div style="font-size:12px;color:#4a7090">戻り売り圧力が続く可能性</div></div></div><div class="risk-row"><span style="color:#ffd166;font-size:16px;flex-shrink:0">△</span><div><div style="font-size:14px;font-weight:600;color:#ffd166">出来高平均水準</div><div style="font-size:12px;color:#4a7090">強い上昇には出来高増が必要</div></div></div><div class="risk-row"><span style="color:#ffd166;font-size:16px;flex-shrink:0">△</span><div><div style="font-size:14px;font-weight:600;color:#ffd166">市場に劣後（-1.63%）</div><div style="font-size:12px;color:#4a7090">相対弱者は上昇しにくい</div></div></div>
+</div>
+
+<div class="footer">generated by scanner_tech.py</div>
+</body>
+</html>
